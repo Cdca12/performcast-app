@@ -3,23 +3,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
+import pyodbc
 
-# dataSet = pd.read_csv('hiring.csv')
+server = '10.10.99.113\sqlutilerias' 
+database = 'pruebas' 
+username = 'rwong' 
+password = '456852' 
+query = "SELECT * FROM Cat_Colores"
+conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
 
-# dataSet['experience'].fillna(0, inplace=True)
-# dataSet['test_score'].fillna(dataSet['test_score'].mean(), inplace=True)
+df = pd.read_sql(query, conn)
+print(df)
 
-# X = dataSet.iloc[:, :3]
-
-# #Converting words to integer values
-# def convert_to_int(word):
-#     word_dict = {'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6, 'seven':7, 'eight':8,
-#                 'nine':9, 'ten':10, 'eleven':11, 'twelve':12, 'zero':0, 0: 0}
-#     return word_dict[word]
-
-# X['experience'] = X['experience'].apply(lambda x : convert_to_int(x))
-
-# y = dataSet.iloc[:, -1]
+#cursor = conn.cursor()
+#cursor.execute('SELECT * FROM Cat_Colores')
+#for row in cursor:
+#   print(row)
 
 dataSet = pd.read_csv('rendimientos.csv');
 dataSet['indices_depresion'].fillna('Medio', inplace=True)
