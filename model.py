@@ -4,25 +4,44 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
 
+# dataSet = pd.read_csv('hiring.csv')
 
-dataSet = pd.read_csv('hiring.csv')
+# dataSet['experience'].fillna(0, inplace=True)
+# dataSet['test_score'].fillna(dataSet['test_score'].mean(), inplace=True)
 
-dataSet['experience'].fillna(0, inplace=True)
+# X = dataSet.iloc[:, :3]
 
-dataSet['test_score'].fillna(dataSet['test_score'].mean(), inplace=True)
+# #Converting words to integer values
+# def convert_to_int(word):
+#     word_dict = {'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6, 'seven':7, 'eight':8,
+#                 'nine':9, 'ten':10, 'eleven':11, 'twelve':12, 'zero':0, 0: 0}
+#     return word_dict[word]
 
-X = dataSet.iloc[:, :3]
+# X['experience'] = X['experience'].apply(lambda x : convert_to_int(x))
 
-#Converting words to integer values
-def convert_to_int(word):
-    word_dict = {'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6, 'seven':7, 'eight':8,
-                'nine':9, 'ten':10, 'eleven':11, 'twelve':12, 'zero':0, 0: 0}
-    return word_dict[word]
+# y = dataSet.iloc[:, -1]
 
-X['experience'] = X['experience'].apply(lambda x : convert_to_int(x))
+dataSet = pd.read_csv('rendimientos.csv');
+dataSet['indices_depresion'].fillna('Medio', inplace=True)
+dataSet['nivel_estres'].fillna('Medio', inplace=True)
+dataSet['factores_socioeconomicos'].fillna('Clase media', inplace=True)
+
+print('---------------------------')
+X = dataSet.iloc[:, :6]
+
+def nivel_indices_to_int(word):
+     word_dict = {'Bajo' : 1, 'Medio' : 2, 'Alto' :3, 0: 0}
+     return word_dict[word]
+
+def factores_to_int(word):
+     word_dict = {'Clase baja' : 1, 'Clase media baja' : 2, 'Clase media' :3, 'Clase media alta' : 4, 'Clase alta' : 5, 0 : 0}
+     return word_dict[word]
+
+X['indices_depresion'] = X['indices_depresion'].apply(lambda x : nivel_indices_to_int(x))
+X['nivel_estres'] = X['nivel_estres'].apply(lambda x : nivel_indices_to_int(x))
+X['factores_socioeconomicos'] = X['factores_socioeconomicos'].apply(lambda x : factores_to_int(x))
 
 y = dataSet.iloc[:, -1]
-
 #Splitting Training and Test Set
 #Since we have a very small dataset, we will train our model with all availabe data.
 
@@ -37,4 +56,4 @@ pickle.dump(regressor, open('model.pkl','wb'))
 
 # Loading model to compare the results
 model = pickle.load(open('model.pkl','rb'))
-print(model.predict([[2, 9, 6]]))
+print(model.predict([[2, 88, 50, 1, 2, 1]]))
