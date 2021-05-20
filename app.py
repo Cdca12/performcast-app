@@ -10,8 +10,6 @@ app.config['JSON_SORT_KEYS'] = False
 model = pickle.load(open('model.pkl', 'rb'))
 
 # TEST
-
-
 @app.route('/', methods=['GET'])
 def test():
     return jsonify({
@@ -59,7 +57,7 @@ def predict_api():
     prediction = model.predict([np.array(list(data.values()))])
 
     output = prediction[0]
-    
+
     # bind test
     data = output
 

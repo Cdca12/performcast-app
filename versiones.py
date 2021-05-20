@@ -1,5 +1,4 @@
 # Archivo de prueba de la correcta instalación de librerías
-
 import scipy
 print('scipy: %s' % scipy.__version__)
 # numpy
