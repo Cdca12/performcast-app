@@ -1,6 +1,6 @@
 import requests
 
 url = 'http://localhost:5000/predict_api'
-r = requests.post(url,json={'experience':2, 'test_score':9, 'interview_score':6})
+r = requests.post(url,json={'semestre':4, 'calificacion':60, 'creditos_acumulados':100, 'indices_depresion':2, 'nivel_estres':2, 'factores_socioeconomicos':3})
 
 print(r.json())

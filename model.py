@@ -3,29 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
-import pyodbc
-
-server = '10.10.99.113\sqlutilerias' 
-database = 'pruebas' 
-username = 'rwong' 
-password = '456852' 
-query = "SELECT * FROM Cat_Colores"
-conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-
-df = pd.read_sql(query, conn)
-print(df)
-
-#cursor = conn.cursor()
-#cursor.execute('SELECT * FROM Cat_Colores')
-#for row in cursor:
-#   print(row)
 
 dataSet = pd.read_csv('rendimientos.csv');
 dataSet['indices_depresion'].fillna('Medio', inplace=True)
 dataSet['nivel_estres'].fillna('Medio', inplace=True)
 dataSet['factores_socioeconomicos'].fillna('Clase media', inplace=True)
 
-print('---------------------------')
 X = dataSet.iloc[:, :6]
 
 def nivel_indices_to_int(word):
@@ -44,8 +27,8 @@ y = dataSet.iloc[:, -1]
 #Splitting Training and Test Set
 #Since we have a very small dataset, we will train our model with all availabe data.
 
-from sklearn.linear_model import LinearRegression
-regressor = LinearRegression()
+from sklearn.linear_model import LogisticRegression
+regressor = LogisticRegression()
 
 #Fitting model with trainig data
 regressor.fit(X, y)
@@ -55,4 +38,7 @@ pickle.dump(regressor, open('model.pkl','wb'))
 
 # Loading model to compare the results
 model = pickle.load(open('model.pkl','rb'))
-print(model.predict([[2, 88, 50, 1, 2, 1]]))
+
+test = [4, 60, 100, 2, 2, 3]
+print(model.predict([test]))
+print(model.predict_proba([test]))

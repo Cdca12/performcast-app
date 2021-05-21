@@ -54,13 +54,24 @@ def predict_api():
     For direct API calls trought request
     '''
     data = request.get_json(force=True)
-    prediction = model.predict([np.array(list(data.values()))])
+    valores = np.array(list(data.values()))
+    prediction = model.predict([valores])
+    probabilidad = model.predict_proba([valores])
+    analisis = ''
+    if prediction[0] == 0:
+        analisis = 'Regular'
+    elif probabilidad[0][1] > 0.90:
+        analisis = "En peligro" # Tienen mas de un 90% de desertar
+    elif probabilidad[0][1] > 0.70:
+        analisis = "Critico" #Tienen de 70% a 90% de desertar
+    else:
+        analisis = "Irregular"  #Tienen de 50% a 70 % de desertar
 
-    output = prediction[0]
+    output = { 'desierta': int(prediction[0]), 'prob_si': probabilidad[0][1], 'prob_no': probabilidad[0][0], 'Analisis reticular': analisis }
 
     # bind test
     data = output
-
+    print(data)
     return jsonify({
         "status": status,
         "message": message,
