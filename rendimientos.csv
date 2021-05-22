@@ -1,16 +1,15 @@
-﻿semestre,calificacion,creditos_acumulados,indices_depresion,nivel_estres,factores_socioeconomicos,calificacion_final
-1,0,0,Bajo,Bajo,Clase baja,86
-2,90,30,Medio,Medio,Clase media baja,84
-2,65,20,Alto,Alto,Clase media,65
-2,95,35,,,Clase media alta,96
-2,70,25,,,Clase alta,91
-2,55,18,,,,50
-3,86,45,,,,69
-3,86,65,,,,80
-4,80,90,,,,78
-4,88,92,,,,72
-4,79,87,,,,94
-4,61,84,,,,60
-5,66,100,,,,40
-5,74,120,,,,70
-5,80,110,,,,80
+﻿semestre,creditos_acumulados,indices_depresion,nivel_estres,factores_socioeconomicos,calificacion_final
+1,27,Bajo,Medio,Clase media baja,89
+2,55,Bajo,Medio,Clase media baja,82
+2,55,Bajo,Medio,Clase media,90
+2,60,Bajo,Medio,Clase media baja,84
+2,55,Bajo,Alto,Clase media,91
+2,50,Medio,Bajo,Clase baja,76
+3,73,Medio,Bajo,Clase baja,74
+3,83,Bajo,Alto,Clase alta,95
+4,112,Bajo,Alto,Clase media alta,88
+4,116,Bajo,Alto,Clase media alta,92
+4,107,Medio,Medio,Clase media baja,72
+5,130,Alto,Alto,Clase media baja,66
+5,138,Bajo,Medio,Clase media,82
+5,138,Bajo,Alto,Clase alta,80

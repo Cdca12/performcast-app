@@ -21,13 +21,21 @@ import pickle
 
 # y = dataSet.iloc[:, -1]
 
+# Leer data del csv
 dataSet = pd.read_csv('rendimientos.csv');
+
+# Rellenar data en celdas vacias
 dataSet['indices_depresion'].fillna('Medio', inplace=True)
 dataSet['nivel_estres'].fillna('Medio', inplace=True)
 dataSet['factores_socioeconomicos'].fillna('Clase media', inplace=True)
 
 print('---------------------------')
-X = dataSet.iloc[:, :6]
+
+# Obtenemos datos de entrada
+X = dataSet.iloc[:, :5]
+
+# Convertir datos cualitativos en cuantitativos
+# Se les da un valor numérico para poder hacer operaciones y entrenar el modelo
 
 def nivel_indices_to_int(word):
      word_dict = {'Bajo' : 1, 'Medio' : 2, 'Alto' :3, 0: 0}
@@ -41,19 +49,35 @@ X['indices_depresion'] = X['indices_depresion'].apply(lambda x : nivel_indices_t
 X['nivel_estres'] = X['nivel_estres'].apply(lambda x : nivel_indices_to_int(x))
 X['factores_socioeconomicos'] = X['factores_socioeconomicos'].apply(lambda x : factores_to_int(x))
 
+# Obtenemos los resultados existentes
 Y = dataSet.iloc[:, -1]
-#Splitting Training and Test Set
-#Since we have a very small dataset, we will train our model with all availabe data.
 
+
+# Como tenemos un dataset pequeño, entrenaremos el modelo con toda la información disponible
+
+# Se usa un Algoritmo de Regresión Lineal
 from sklearn.linear_model import LinearRegression
+
 regressor = LinearRegression()
 
-#Fitting model with trainig data
+# Ajustamos modelo con la data entrenada
 regressor.fit(X, Y)
 
-# Saving model to disk
-pickle.dump(regressor, open('model.pkl','wb'))
+# Guardamos el modelo en disco
+try:
+     pickle.dump(regressor, open('model.pkl','wb'))
+     print('¡El modelo se ha generado con éxito!')
+except Exception as e:
+     raise Exception("No se pudo generar el modelo", e)
 
-# Loading model to compare the results
-model = pickle.load(open('model.pkl','rb'))
-print(model.predict([[5, 75, 110, 1, 2, 1]]))
+########################################################
+
+# Test:
+# Cargamos modelo para comparar resultados
+try:
+     model = pickle.load(open('model.pkl','rb'))
+     print("Predicción de prueba:", model.predict([[5, 138, 1, 3, 5]]))
+except Exception as e:
+     raise Exception("No se pudo ejecutar la prueba del modelo", e)
+
+
