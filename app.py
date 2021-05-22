@@ -1,4 +1,4 @@
-from flask import Flask, json, jsonify, request
+from flask import Flask, jsonify, request
 import numpy as np
 import pickle
 
@@ -13,59 +13,53 @@ model = pickle.load(open('model.pkl', 'rb'))
 @app.route('/', methods=['GET'])
 def test():
     return jsonify({
-        "status": 1,
-        "message": 'Your app is online!',
-        "data": ''
+        "STATUS": 1,
+        "MESSAGE": '¡Tu aplicación está funcionando correctamente!',
+        "DATA": ''
     })
 
-
-# Obtener predicción
-@app.route('/predict', methods=['POST'])
-def obtenerPrediccion():
-    status = 1
-    message = ''
-    data = ''
-
-    '''
-    For rendering results on HTML GUI
-    '''
-    int_features = [int(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    prediction = model.predict(final_features)
-
-    output = round(prediction[0], 2)
-
-    # bind test
-    data = output
-
-    return jsonify({
-        "status": status,
-        "message": message,
-        "data": data
-    })
-
-
-@app.route('/predict_api', methods=['POST'])
+# Obtener predicción de rendimiento
+@app.route('/rendimiento', methods=['POST'])
 def predict_api():
     status = 1
     message = ''
     data = ''
-    '''
-    For direct API calls trought request
-    '''
-    data = request.get_json(force=True)
-    prediction = model.predict([np.array(list(data.values()))])
 
-    output = prediction[0]
+    bodyData = request.get_json(force=True)
+    prediction = model.predict([np.array(list(bodyData.values()))])
 
-    # bind test
-    data = output
+    # Armamos respuesta con los resultados de la prediccion
+    calificacion_final = prediction[0]
+    rendimiento = obtenerRendimiento(calificacion_final)
+
+    data = {
+        "calificacion_final": calificacion_final,
+        "rendimiento": rendimiento
+    }
 
     return jsonify({
-        "status": status,
-        "message": message,
-        "data": data
+        "STATUS": status,
+        "MESSAGE": message,
+        "DATA": data
     })
+
+
+def obtenerRendimiento(calificacion_final):
+    rendimiento = ''
+
+    # Basandonos en la Matriz de rendimiento escolar
+    if calificacion_final >= 95:
+        rendimiento = 'Excelente'
+    elif calificacion_final >= 85 and calificacion_final <= 94:
+        rendimiento = 'Notable'
+    elif calificacion_final >= 76 and calificacion_final <= 84:
+        rendimiento = 'Bueno'
+    elif calificacion_final >= 70 and calificacion_final <= 75:
+        rendimiento = 'Suficiente'
+    elif calificacion_final < 70:
+        rendimiento = 'Insuficiente'
+
+    return rendimiento
 
 
 if __name__ == '__main__':
