@@ -41,7 +41,7 @@ X['indices_depresion'] = X['indices_depresion'].apply(lambda x : nivel_indices_t
 X['nivel_estres'] = X['nivel_estres'].apply(lambda x : nivel_indices_to_int(x))
 X['factores_socioeconomicos'] = X['factores_socioeconomicos'].apply(lambda x : factores_to_int(x))
 
-y = dataSet.iloc[:, -1]
+Y = dataSet.iloc[:, -1]
 #Splitting Training and Test Set
 #Since we have a very small dataset, we will train our model with all availabe data.
 
@@ -49,11 +49,11 @@ from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 
 #Fitting model with trainig data
-regressor.fit(X, y)
+regressor.fit(X, Y)
 
 # Saving model to disk
 pickle.dump(regressor, open('model.pkl','wb'))
 
 # Loading model to compare the results
 model = pickle.load(open('model.pkl','rb'))
-print(model.predict([[2, 88, 50, 1, 2, 1]]))
+print(model.predict([[5, 75, 110, 1, 2, 1]]))
