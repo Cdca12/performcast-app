@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request
 import numpy as np
 import pickle
 import csv
+import dataFirebase
+import utils
 
 app = Flask(__name__)
 
@@ -51,18 +53,21 @@ def añadirDatos():
 
 
 # Obtener predicción de rendimiento
-@app.route('/rendimiento', methods=['POST'])
-def predecirRendimiento():
+@app.route('/rendimiento/<string:numero_control>', methods=['GET'])
+def predecirRendimiento(numero_control):
     status = 1
     message = ''
     data = ''
 
-    bodyData = request.get_json(force=True)
-    prediction = model.predict([np.array(list(bodyData.values()))])
+    # Obtenemos información del alumno con el numero de control
+    alumno = dataFirebase.obtenerInformacionAlumno(numero_control)
 
-    # Armamos respuesta con los resultados de la prediccion
+    # Obtenemos predicción con la información del alumno
+    prediction = model.predict([np.array(list(alumno.values()))])
+
+    # Armamos respuesta con los resultados de la prediccion                                                                                                                                             
     calificacion_final = prediction[0]
-    rendimiento = obtenerRendimiento(calificacion_final)
+    rendimiento = utils.obtenerRendimiento(calificacion_final)    
 
     data = {
         "calificacion_final": calificacion_final,
@@ -74,24 +79,6 @@ def predecirRendimiento():
         "MESSAGE": message,
         "DATA": data
     })
-
-# Método para regresar el rendimiento basándose en la predicción de la calificación final
-def obtenerRendimiento(calificacion_final):
-    rendimiento = ''
-
-    # Basandonos en la Matriz de rendimiento escolar
-    if calificacion_final >= 95:
-        rendimiento = 'Excelente'
-    elif calificacion_final >= 85 and calificacion_final <= 94:
-        rendimiento = 'Notable'
-    elif calificacion_final >= 76 and calificacion_final <= 84:
-        rendimiento = 'Bueno'
-    elif calificacion_final >= 70 and calificacion_final <= 75:
-        rendimiento = 'Suficiente'
-    elif calificacion_final < 70:
-        rendimiento = 'Insuficiente'
-
-    return rendimiento
 
 
 if __name__ == '__main__':

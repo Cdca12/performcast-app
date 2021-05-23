@@ -1,5 +1,6 @@
 import pyrebase
 from config import firebaseConfig 
+import utils 
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 
@@ -32,10 +33,9 @@ def obtenerInformacionAlumno(numero_control):
     alumno = {
         "semestre": alumnoDb['semestre'],
         "creditos_acumulados": alumnoDb['creditos_acumulados'],
-        "indices_depresion": alumnoDb['indices_depresion'],
-        "nivel_estres": alumnoDb['nivel_estres'],
-        "factores_socioeconomicos": alumnoDb['factores_socioeconomicos'],
-        "calificacion_final": alumnoDb['calificacion_final']
+        "indices_depresion": utils.nivel_indices_to_int(alumnoDb['indices_depresion']), 
+        "nivel_estres": utils.nivel_indices_to_int(alumnoDb['nivel_estres']),
+        "factores_socioeconomicos": utils.factores_to_int(alumnoDb['factores_socioeconomicos'])
     }
     return alumno
 

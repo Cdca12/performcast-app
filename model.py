@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
+import utils
 
 # Leer data del csv
 dataSet = pd.read_csv('rendimientos.csv');
@@ -15,20 +16,12 @@ dataSet['factores_socioeconomicos'].fillna('Clase media', inplace=True)
 # Obtenemos datos de entrada
 X = dataSet.iloc[:, :5]
 
+
 # Convertir datos cualitativos en cuantitativos
 # Se les da un valor numérico para poder hacer operaciones y entrenar el modelo
-
-def nivel_indices_to_int(word):
-     word_dict = {'Bajo' : 1, 'Medio' : 2, 'Alto' :3, 0: 0}
-     return word_dict[word]
-
-def factores_to_int(word):
-     word_dict = {'Clase baja' : 1, 'Clase media baja' : 2, 'Clase media' :3, 'Clase media alta' : 4, 'Clase alta' : 5, 0 : 0}
-     return word_dict[word]
-
-X['indices_depresion'] = X['indices_depresion'].apply(lambda x : nivel_indices_to_int(x))
-X['nivel_estres'] = X['nivel_estres'].apply(lambda x : nivel_indices_to_int(x))
-X['factores_socioeconomicos'] = X['factores_socioeconomicos'].apply(lambda x : factores_to_int(x))
+X['indices_depresion'] = X['indices_depresion'].apply(lambda x : utils.nivel_indices_to_int(x))
+X['nivel_estres'] = X['nivel_estres'].apply(lambda x : utils.nivel_indices_to_int(x))
+X['factores_socioeconomicos'] = X['factores_socioeconomicos'].apply(lambda x : utils.factores_to_int(x))
 
 # Obtenemos los resultados existentes
 Y = dataSet.iloc[:, -1]
@@ -59,6 +52,7 @@ except Exception as e:
 try:
      model = pickle.load(open('model.pkl','rb'))
      print("Predicción de prueba:", model.predict([[5, 138, 1, 3, 5]]))
+     # print("Predicción de prueba:", model.predict([[1,	27,	"Bajo",	"Medio",	"Clase media baja",	89]]))
 except Exception as e:
      raise Exception("No se pudo ejecutar la prueba del modelo", e)
 
