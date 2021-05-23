@@ -14,6 +14,8 @@ model = pickle.load(open('model.pkl', 'rb'))
 
 # TEST
 # TODO: Mostrar README.md del proyecto den GitHub
+
+
 @app.route('/', methods=['GET'])
 def test():
     return jsonify({
@@ -24,6 +26,8 @@ def test():
 
 # Agregar información a la data
 # Aqui recibimos todos los datos incluyendo la calificación final pasada, un hecho
+
+
 @app.route('/datos', methods=['POST'])
 def añadirDatos():
     status = 1
@@ -33,7 +37,7 @@ def añadirDatos():
     # Obtenemos JSON
     bodyData = request.get_json(force=True)
 
-    # Obtenemos en un arreglo solo los valores del JSON 
+    # Obtenemos en un arreglo solo los valores del JSON
     arregloData = list(bodyData.values())
 
     # Insertamos registro en csv
@@ -69,14 +73,14 @@ def predecirRendimiento(numero_control):
             "STATUS": status,
             "MESSAGE": message,
             "DATA": data
-    })
+        })
 
     # Obtenemos predicción con la información del alumno
     prediction = model.predict([np.array(list(alumno.values()))])
 
-    # Armamos respuesta con los resultados de la prediccion                                                                                                                                             
+    # Armamos respuesta con los resultados de la prediccion
     calificacion_final = prediction[0]
-    rendimiento = utils.obtenerRendimiento(calificacion_final)    
+    rendimiento = utils.obtenerRendimiento(calificacion_final)
 
     data = {
         "calificacion_final": calificacion_final,

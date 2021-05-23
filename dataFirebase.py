@@ -1,6 +1,6 @@
 import pyrebase
-from config import firebaseConfig 
-import utils 
+from config import firebaseConfig
+import utils
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 
@@ -11,6 +11,8 @@ db = firebase.database()
 # Esta clase fuera el DAL
 
 # Añadir información de la data
+
+
 def añadirDatosAlumno(numero_control, semestre, creditos_acumulados, indices_depresion, nivel_estres, factores_socioeconomicos):
     db.child("alumnos").child(numero_control).set({
         "semestre": semestre,
@@ -21,6 +23,8 @@ def añadirDatosAlumno(numero_control, semestre, creditos_acumulados, indices_de
     })
 
 # Obtener información del alumno
+
+
 def obtenerInformacionAlumno(numero_control):
     alumnoDb = db.child("alumnos").child(numero_control).get().val()
     if not alumnoDb:
@@ -29,7 +33,7 @@ def obtenerInformacionAlumno(numero_control):
     alumno = {
         "semestre": alumnoDb['semestre'],
         "creditos_acumulados": alumnoDb['creditos_acumulados'],
-        "indices_depresion": utils.nivel_indices_to_int(alumnoDb['indices_depresion']), 
+        "indices_depresion": utils.nivel_indices_to_int(alumnoDb['indices_depresion']),
         "nivel_estres": utils.nivel_indices_to_int(alumnoDb['nivel_estres']),
         "factores_socioeconomicos": utils.factores_to_int(alumnoDb['factores_socioeconomicos'])
     }
@@ -52,7 +56,6 @@ def obtenerInformacionAlumno(numero_control):
 # añadirDatosAlumno(17170020,	5,	138,	"Bajo",	"Medio",	"Clase media")
 # añadirDatosAlumno(17170021,	5,	138,	"Bajo",	"Alto",	"Clase alta")
 # añadirDatosAlumno(17170522,	5,	138,	"Bajo",	"Bajo",	"Clase alta")
-
 
 
 #########################
