@@ -10,9 +10,9 @@ db = firebase.database()
 # Esta clase fuera el DAL
 # TODO: Añadir archivo de config.json o equivalente, donde esté la info de la bd y el firebaseConfig
 
-# Añadir tupla de la data
-def añadirTupla(semestre, creditos_acumulados, indices_depresion, nivel_estres, factores_socioeconomicos, calificacion_final):
-    db.child("rendimientos").push({
+# Añadir información de la data
+def añadirDatosAlumno(numero_control, semestre, creditos_acumulados, indices_depresion, nivel_estres, factores_socioeconomicos, calificacion_final):
+    db.child("alumnos").child(numero_control).set({
         "semestre": semestre,
         "creditos_acumulados": creditos_acumulados,
         "indices_depresion": indices_depresion,
@@ -21,27 +21,24 @@ def añadirTupla(semestre, creditos_acumulados, indices_depresion, nivel_estres,
         "calificacion_final": calificacion_final
     })
 
-# Datos de la data
-# añadirTupla(1, 90, 100,	"Bajo",	"Bajo",	"Clase baja", "Excelente")
-# añadirTupla(5,	70,	200,	"Medio",	"Medio",	"Clase media baja",	"Excelente")
-# añadirTupla(7,	60,	100,	"Alto",	"Alto",	"Clase media",	"Excelente")
-# añadirTupla(10,	100,	200,	"Bajo",	"Bajo",	"Clase media alta",	"Notable")
-# añadirTupla(1, 90, 100,	"Bajo",	"Bajo",	"Clase baja", "Excelente")
-# añadirTupla(5,	70,	200,	"Medio",	"Medio",	"Clase media baja",	"Excelente")
-# añadirTupla(7,	60,	100,	"Alto",	"Alto",	"Clase media",	"Excelente")
-# añadirTupla(10,	100,	200,	"Bajo",	"Bajo",	"Clase media alta",	"Notable")
-# añadirTupla(1, 90, 100,	"Bajo",	"Bajo",	"Clase baja", "Excelente")
-# añadirTupla(5,	70,	200,	"Medio",	"Medio",	"Clase media baja",	"Excelente")
-# añadirTupla(7,	60,	100,	"Alto",	"Alto",	"Clase media",	"Excelente")
-# añadirTupla(10,	100,	200,	"Bajo",	"Bajo",	"Clase media alta",	"Notable")
-# añadirTupla(1, 90, 100,	"Bajo",	"Bajo",	"Clase baja", "Excelente")
-# añadirTupla(5,	70,	200,	"Medio",	"Medio",	"Clase media baja",	"Excelente")
-# añadirTupla(7,	60,	100,	"Alto",	"Alto",	"Clase media",	"Excelente")
+# Datos de alumnos (mismos que la data)
+# añadirDatosAlumno(17171345, 1,	27,	"Bajo",	"Medio",	"Clase media baja",	89)
+# añadirDatosAlumno(17171456, 2,	55,	"Bajo",	"Medio",	"Clase media baja",	82)
+# añadirDatosAlumno(17171424, 2,	55,	"Bajo",	"Medio",	"Clase media",	90)
 
-# Regresar data de la bd
-def obtenerData():
-    data = db.child("rendimientos").get()
-    return data
+# Obtener información del alumno
+def obtenerInformacionAlumno(numero_control):
+    alumnoDb = db.child("alumnos").child(numero_control).get().val()
+    alumno = {
+        "semestre": alumnoDb['semestre'],
+        "creditos_acumulados": alumnoDb['creditos_acumulados'],
+        "indices_depresion": alumnoDb['indices_depresion'],
+        "nivel_estres": alumnoDb['nivel_estres'],
+        "factores_socioeconomicos": alumnoDb['factores_socioeconomicos'],
+        "calificacion_final": alumnoDb['calificacion_final']
+    }
+    return alumno
+
 
 #########################
 # Script de test, aprendiendo a usar el firebase
