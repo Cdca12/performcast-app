@@ -34,9 +34,22 @@ def obtenerInformacionAlumno(numero_control):
 
 # Test  Inicial
 # Datos de alumnos (mismos que la data)
-# añadirDatosAlumno(17171345, 1,	27,	"Bajo",	"Bajo",	"Clase media baja")
-# añadirDatosAlumno(17171456, 2,	55,	"Bajo",	"Medio",	"Clase media baja")
-# añadirDatosAlumno(17171424, 2,	55,	"Bajo",	"Medio",	"Clase media")
+# añadirDatosAlumno(17170013,	1,	27,	"Bajo",	"Medio", "Clase media baja")
+# añadirDatosAlumno(17171043,	2,	55,	"Bajo",	"Medio",	"Clase media baja")
+# añadirDatosAlumno(17170562,	2,	55,	"Bajo",	"Medio",	"Clase media")
+# añadirDatosAlumno(17170014,	2,	60,	"Bajo",	"Medio",	"Clase media baja")
+# añadirDatosAlumno(17170015,	2,	55,	"Bajo",	"Alto",	"Clase media")
+# añadirDatosAlumno(17170600,	2,	50,	"Medio",	"Bajo",	"Clase baja")
+# añadirDatosAlumno(17170601,	3,	73,	"Medio",	"Bajo",	"Clase baja")
+# añadirDatosAlumno(17170016,	3,	83,	"Bajo",	"Alto",	"Clase alta")
+# añadirDatosAlumno(17170017,	4,	112,	"Bajo",	"Alto",	"Clase media alta")
+# añadirDatosAlumno(17170826,	4,	116,	"Bajo",	"Alto",	"Clase media alta")
+# añadirDatosAlumno(17170018,	4,	107,	"Medio",	"Medio",	"Clase media baja")
+# añadirDatosAlumno(17170019,	5,	130,	"Alto",	"Alto",	"Clase media baja")
+# añadirDatosAlumno(17170020,	5,	138,	"Bajo",	"Medio",	"Clase media")
+# añadirDatosAlumno(17170021,	5,	138,	"Bajo",	"Alto",	"Clase alta")
+# añadirDatosAlumno(17170522,	5,	138,	"Bajo",	"Bajo",	"Clase alta")
+
 
 
 #########################
