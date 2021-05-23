@@ -4,23 +4,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
 
-# dataSet = pd.read_csv('hiring.csv')
-
-# dataSet['experience'].fillna(0, inplace=True)
-# dataSet['test_score'].fillna(dataSet['test_score'].mean(), inplace=True)
-
-# X = dataSet.iloc[:, :3]
-
-# #Converting words to integer values
-# def convert_to_int(word):
-#     word_dict = {'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6, 'seven':7, 'eight':8,
-#                 'nine':9, 'ten':10, 'eleven':11, 'twelve':12, 'zero':0, 0: 0}
-#     return word_dict[word]
-
-# X['experience'] = X['experience'].apply(lambda x : convert_to_int(x))
-
-# y = dataSet.iloc[:, -1]
-
 # Leer data del csv
 dataSet = pd.read_csv('rendimientos.csv');
 
@@ -28,8 +11,6 @@ dataSet = pd.read_csv('rendimientos.csv');
 dataSet['indices_depresion'].fillna('Medio', inplace=True)
 dataSet['nivel_estres'].fillna('Medio', inplace=True)
 dataSet['factores_socioeconomicos'].fillna('Clase media', inplace=True)
-
-print('---------------------------')
 
 # Obtenemos datos de entrada
 X = dataSet.iloc[:, :5]
@@ -52,7 +33,6 @@ X['factores_socioeconomicos'] = X['factores_socioeconomicos'].apply(lambda x : f
 # Obtenemos los resultados existentes
 Y = dataSet.iloc[:, -1]
 
-
 # Como tenemos un dataset pequeño, entrenaremos el modelo con toda la información disponible
 
 # Se usa un Algoritmo de Regresión Lineal
@@ -63,6 +43,8 @@ regressor = LinearRegression()
 # Ajustamos modelo con la data entrenada
 regressor.fit(X, Y)
 
+print('---------------------------')
+
 # Guardamos el modelo en disco
 try:
      pickle.dump(regressor, open('model.pkl','wb'))
@@ -70,7 +52,7 @@ try:
 except Exception as e:
      raise Exception("No se pudo generar el modelo", e)
 
-########################################################
+######################################################################################################
 
 # Test:
 # Cargamos modelo para comparar resultados
@@ -80,4 +62,5 @@ try:
 except Exception as e:
      raise Exception("No se pudo ejecutar la prueba del modelo", e)
 
+print('---------------------------')
 
