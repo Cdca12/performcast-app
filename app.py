@@ -62,6 +62,15 @@ def predecirRendimiento(numero_control):
     # Obtenemos información del alumno con el numero de control
     alumno = dataFirebase.obtenerInformacionAlumno(numero_control)
 
+    if not alumno:
+        status = 0
+        message = 'No existe un alumno con ese número de control'
+        return jsonify({
+            "STATUS": status,
+            "MESSAGE": message,
+            "DATA": data
+    })
+
     # Obtenemos predicción con la información del alumno
     prediction = model.predict([np.array(list(alumno.values()))])
 

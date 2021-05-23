@@ -23,6 +23,9 @@ def añadirDatosAlumno(numero_control, semestre, creditos_acumulados, indices_de
 # Obtener información del alumno
 def obtenerInformacionAlumno(numero_control):
     alumnoDb = db.child("alumnos").child(numero_control).get().val()
+    if not alumnoDb:
+        return None
+
     alumno = {
         "semestre": alumnoDb['semestre'],
         "creditos_acumulados": alumnoDb['creditos_acumulados'],
