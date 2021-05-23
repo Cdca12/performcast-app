@@ -9,23 +9,16 @@ db = firebase.database()
 #########################
 # Demo app
 # Esta clase fuera el DAL
-# TODO: Añadir archivo de config.json o equivalente, donde esté la info de la bd y el firebaseConfig
 
 # Añadir información de la data
-def añadirDatosAlumno(numero_control, semestre, creditos_acumulados, indices_depresion, nivel_estres, factores_socioeconomicos, calificacion_final):
+def añadirDatosAlumno(numero_control, semestre, creditos_acumulados, indices_depresion, nivel_estres, factores_socioeconomicos):
     db.child("alumnos").child(numero_control).set({
         "semestre": semestre,
         "creditos_acumulados": creditos_acumulados,
         "indices_depresion": indices_depresion,
         "nivel_estres": nivel_estres,
         "factores_socioeconomicos": factores_socioeconomicos,
-        "calificacion_final": calificacion_final
     })
-
-# Datos de alumnos (mismos que la data)
-# añadirDatosAlumno(17171345, 1,	27,	"Bajo",	"Medio",	"Clase media baja",	89)
-# añadirDatosAlumno(17171456, 2,	55,	"Bajo",	"Medio",	"Clase media baja",	82)
-# añadirDatosAlumno(17171424, 2,	55,	"Bajo",	"Medio",	"Clase media",	90)
 
 # Obtener información del alumno
 def obtenerInformacionAlumno(numero_control):
@@ -38,6 +31,12 @@ def obtenerInformacionAlumno(numero_control):
         "factores_socioeconomicos": utils.factores_to_int(alumnoDb['factores_socioeconomicos'])
     }
     return alumno
+
+# Test  Inicial
+# Datos de alumnos (mismos que la data)
+# añadirDatosAlumno(17171345, 1,	27,	"Bajo",	"Bajo",	"Clase media baja")
+# añadirDatosAlumno(17171456, 2,	55,	"Bajo",	"Medio",	"Clase media baja")
+# añadirDatosAlumno(17171424, 2,	55,	"Bajo",	"Medio",	"Clase media")
 
 
 #########################

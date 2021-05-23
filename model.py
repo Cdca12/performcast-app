@@ -52,7 +52,6 @@ except Exception as e:
 try:
      model = pickle.load(open('model.pkl','rb'))
      print("Predicción de prueba:", model.predict([[5, 138, 1, 3, 5]]))
-     # print("Predicción de prueba:", model.predict([[1,	27,	"Bajo",	"Medio",	"Clase media baja",	89]]))
 except Exception as e:
      raise Exception("No se pudo ejecutar la prueba del modelo", e)
 
