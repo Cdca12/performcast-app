@@ -1,7 +1,6 @@
 # For Firebase JS SDK v7.20.0 and later, measurementId is optional
 import config
 
-
 firebaseConfig = {}
 
 if config.TESTING == True:
