@@ -1,5 +1,5 @@
 import pyrebase
-from config import firebaseConfig 
+from firebaseConfig import firebaseConfig 
 import utils 
 
 firebase = pyrebase.initialize_app(firebaseConfig)

@@ -128,5 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# FireBase config
-config.py
+# FireBase config test
+firebaseTesting.py

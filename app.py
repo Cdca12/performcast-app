@@ -7,7 +7,7 @@ import utils
 
 app = Flask(__name__)
 
-app.config['JSON_SORT_KEYS'] = False
+app.config.from_object('config')
 
 # Cargar modelos
 model = pickle.load(open('model.pkl', 'rb'))
@@ -91,6 +91,4 @@ def predecirRendimiento(numero_control):
 
 
 if __name__ == '__main__':
-    # Change this before deploying
-    app.run(debug=True)
-    # app.run()
+    app.run()
